@@ -3,6 +3,13 @@ const brlShort = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "
 
 export const money = (n: number) => brl.format(n);
 export const moneyShort = (n: number) => (Math.abs(n) >= 10_000 ? brlShort.format(n) : brl.format(Math.round(n)));
+// Rótulo curto para eixo de gráfico: "4,5 mil", "−1,2 mil", "800".
+export const axisLabel = (n: number) => {
+  const sign = n < 0 ? "−" : "";
+  const v = Math.abs(n);
+  return v >= 1000 ? `${sign}${(v / 1000).toFixed(v % 1000 === 0 ? 0 : 1).replace(".", ",")} mil` : `${sign}${Math.round(v)}`;
+};
+
 export const pct = (n: number) => `${n >= 0 ? "" : "−"}${Math.abs(Math.round(n * 100))}%`;
 
 const MONTHS = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];

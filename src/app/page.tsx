@@ -20,11 +20,11 @@ function Kpi({ title, icon: Icon, children, footer, accent }: { title: string; i
       <CardHeader>
         <CardDescription>{title}</CardDescription>
         <CardAction>
-          <span className={cn("flex size-8 items-center justify-center rounded-lg bg-muted", accent)}>
+          <span className={cn("hidden size-8 items-center justify-center rounded-lg bg-muted sm:flex", accent)}>
             <Icon className="size-4" />
           </span>
         </CardAction>
-        <CardTitle className="font-mono text-2xl font-semibold tracking-tight sm:text-[1.7rem]">{children}</CardTitle>
+        <CardTitle className="font-mono text-lg font-semibold tracking-tight sm:text-2xl xl:text-[1.7rem]">{children}</CardTitle>
       </CardHeader>
       <CardContent className="-mt-1">{footer}</CardContent>
     </Card>
@@ -64,14 +64,14 @@ export default function Dashboard() {
         <MonthSwitcher month={month} months={months} onChange={setPicked} />
       </PageHeader>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
         <Kpi title="Entradas" icon={ArrowDownLeft} accent="text-primary" footer={<Delta now={s.income} before={p.income} />}>
           <Money value={s.income} />
         </Kpi>
         <Kpi title="Saídas" icon={ArrowUpRight} accent="text-destructive" footer={<Delta now={s.expense} before={p.expense} inverse />}>
           <Money value={s.expense} />
         </Kpi>
-        <Kpi title="Sobrou no mês" icon={Wallet} footer={<Delta now={s.net} before={p.net} />}>
+        <Kpi title="Sobrou no mês" icon={Wallet} footer={<Delta now={s.net} before={p.net} absolute />}>
           <Money value={s.net} className={s.net < 0 ? "text-destructive" : ""} />
         </Kpi>
         <Kpi

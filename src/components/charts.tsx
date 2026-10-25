@@ -2,7 +2,7 @@
 
 import { Area, AreaChart, Bar, BarChart, CartesianGrid, Cell, Label, Pie, PieChart, ReferenceLine, XAxis, YAxis } from "recharts";
 import { ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent, type ChartConfig } from "@/components/ui/chart";
-import { money, moneyShort, monthLabel } from "@/lib/format";
+import { axisLabel, money, moneyShort, monthLabel } from "@/lib/format";
 
 // Linha do tooltip com a bolinha da cor, o nome e o valor em reais (desfocável).
 function moneyRow(config: ChartConfig) {
@@ -25,7 +25,7 @@ const flowConfig = {
 
 export function CashflowChart({ data }: { data: { month: string; entradas: number; saidas: number }[] }) {
   return (
-    <ChartContainer config={flowConfig} className="aspect-auto h-[260px] w-full">
+    <ChartContainer config={flowConfig} className="aspect-auto h-[260px] w-full lg:h-[400px]">
       <AreaChart data={data} margin={{ left: 4, right: 12, top: 8 }}>
         <defs>
           <linearGradient id="fill-entradas" x1="0" y1="0" x2="0" y2="1">
@@ -39,7 +39,7 @@ export function CashflowChart({ data }: { data: { month: string; entradas: numbe
         </defs>
         <CartesianGrid vertical={false} strokeDasharray="3 6" />
         <XAxis dataKey="month" tickLine={false} axisLine={false} tickMargin={10} tickFormatter={(m: string) => monthLabel(m)} />
-        <YAxis tickLine={false} axisLine={false} width={56} tickFormatter={(v: number) => moneyShort(v)} className="money" />
+        <YAxis tickLine={false} axisLine={false} width={52} tickFormatter={(v: number) => axisLabel(v)} className="money" />
         <ChartTooltip
           cursor={false}
           content={<ChartTooltipContent indicator="dot" labelFormatter={(_, p) => monthLabel(String(p?.[0]?.payload?.month ?? ""), true)} formatter={moneyRow(flowConfig)} />}
@@ -98,7 +98,7 @@ export function BalanceChart({ data }: { data: { dia: number; saldo: number }[] 
         </defs>
         <CartesianGrid vertical={false} strokeDasharray="3 6" />
         <XAxis dataKey="dia" tickLine={false} axisLine={false} tickMargin={8} interval="preserveStartEnd" tickFormatter={(d: number) => `dia ${d}`} />
-        <YAxis tickLine={false} axisLine={false} width={56} tickFormatter={(v: number) => moneyShort(v)} className="money" />
+        <YAxis tickLine={false} axisLine={false} width={52} tickFormatter={(v: number) => axisLabel(v)} className="money" />
         {negative && <ReferenceLine y={0} stroke="var(--destructive)" strokeDasharray="4 4" />}
         <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="line" labelFormatter={(_, p) => `Dia ${p?.[0]?.payload?.dia}`} formatter={moneyRow(balanceConfig)} />} />
         <Area dataKey="saldo" type="stepAfter" fill="url(#fill-saldo)" stroke="var(--color-saldo)" strokeWidth={2} />

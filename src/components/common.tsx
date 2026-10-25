@@ -34,7 +34,7 @@ export function MonthSwitcher({ month, months, onChange }: { month: string; mont
       <Button variant="ghost" size="icon-sm" aria-label="Mês anterior" disabled={i <= 0} onClick={() => onChange(months[i - 1])}>
         <ChevronLeft />
       </Button>
-      <span className="min-w-32 text-center text-sm font-medium capitalize">{monthLabel(month, true)}</span>
+      <span className="min-w-32 text-center text-sm font-medium first-letter:uppercase">{monthLabel(month, true)}</span>
       <Button variant="ghost" size="icon-sm" aria-label="Próximo mês" disabled={i >= months.length - 1} onClick={() => onChange(months[i + 1])}>
         <ChevronRight />
       </Button>
@@ -79,13 +79,17 @@ export function PageSkeleton() {
   );
 }
 
-export function Delta({ now, before, inverse }: { now: number; before: number; inverse?: boolean }) {
+// Variação contra o mês anterior. Em "reais" quando a base é pequena demais para porcentagem fazer sentido.
+export function Delta({ now, before, inverse, absolute }: { now: number; before: number; inverse?: boolean; absolute?: boolean }) {
   if (!before) return <span className="text-xs text-muted-foreground">sem mês anterior</span>;
-  const d = (now - before) / Math.abs(before);
-  const good = inverse ? d <= 0 : d >= 0;
+  const diff = now - before;
+  const d = diff / Math.abs(before);
+  const good = inverse ? diff <= 0 : diff >= 0;
+  const useMoney = absolute || Math.abs(d) > 3;
   return (
     <span className={cn("text-xs font-medium", good ? "text-primary" : "text-destructive")}>
-      {d >= 0 ? "▲" : "▼"} {Math.abs(Math.round(d * 100))}% <span className="font-normal text-muted-foreground">vs. mês anterior</span>
+      {diff >= 0 ? "▲" : "▼"} {useMoney ? <span className="money">{money(Math.abs(diff))}</span> : `${Math.abs(Math.round(d * 100))}%`}{" "}
+      <span className="hidden font-normal text-muted-foreground sm:inline">vs. mês anterior</span>
     </span>
   );
 }
