@@ -169,7 +169,7 @@ body {
 }
 
 /* No modo privacidade, os eixos de valor dos gráficos também somem. */
-.privacy .recharts-yAxis .recharts-cartesian-axis-tick-value,
+.privacy .recharts-yAxis-tick-labels text,
 .privacy .recharts-label-list text {
   filter: blur(5px);
 }
