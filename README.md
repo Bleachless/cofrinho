@@ -4,6 +4,8 @@
 
 <br />
 
+[![Abrir o app](https://img.shields.io/badge/%E2%96%B6_Abrir_o_app-cofrinho--ten.vercel.app-22c55e?style=for-the-badge)](https://cofrinho-ten.vercel.app)
+
 [![CI](https://github.com/Bleachless/cofrinho/actions/workflows/ci.yml/badge.svg)](https://github.com/Bleachless/cofrinho/actions/workflows/ci.yml)
 ![Next.js](https://img.shields.io/badge/Next.js_16-0f1412?style=flat-square&logo=nextdotjs&logoColor=white)
 ![React](https://img.shields.io/badge/React_19-0f1412?style=flat-square&logo=react&logoColor=61dafb)
